@@ -14,19 +14,16 @@ provider "aws" {
   region  = "ap-southeast-2"
 }
 
-resource "aws_launch_configuration" "example" {
-  image_id           = "ami-05654370f5b5eb0b0"
+resource "aws_instance" "example" {
+  ami           = "ami-05654370f5b5eb0b0"
   instance_type = "t2.micro"
-  security_group_ids = [aws_security_group.instance.id]
-  
   user_data = <<-EOF
               #!/bin/bash
               echo "Hello, World" > index.html
               nohup busybox httpd -f -p 8080 &
               EOF
-
-  lifecycle {
-    create_before_destroy = true
+  tags = {
+    Name = "terraform-example"
   }
 }
 
@@ -40,16 +37,4 @@ resource "aws_security_group" "instance" {
   }
 }
 
-resource "aws_autoscaling_group" "example" {
-  launch_configuration = aws_launch_configuration.example.id
-  availability_zones   = data.aws_availability_zones.all.names
-  
-  min_size = 2
-  max_size = 10
-  
-  tag {
-    key                 = "Name"
-    value               = "terraform-asg-example"
-    propagate_at_launch = true
-  }
-}
+
