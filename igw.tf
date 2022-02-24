@@ -20,7 +20,7 @@ resource "aws_route_table" "rtb_public" {
     Environment = "${var.environment}"
   }
 
-  depends_on = ["aws_vpc.wordpress_vpc"]
+  depends_on = [aws_vpc.wordpress_vpc]
 }
 
 
@@ -30,7 +30,7 @@ resource "aws_route" "route_igw" {
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.wordpress_igateway.id
 
-  depends_on = ["aws_internet_gateway.wordpress_igateway"]
+  depends_on = [aws_internet_gateway.wordpress_igateway]
 }
 
 
@@ -39,7 +39,7 @@ resource "aws_route_table_association" "rta_subnet_association_puba" {
   subnet_id      = aws_subnet.public_subnet_a.id
   route_table_id = aws_route_table.rtb_public.id
 
-  depends_on = ["aws_route_table.rtb_public"]
+  depends_on = [aws_route_table.rtb_public]
 }
 
 # Add  public-b subnet to the route table
@@ -47,5 +47,5 @@ resource "aws_route_table_association" "rta_subnet_association_pubb" {
   subnet_id      = aws_subnet.public_subnet_b.id
   route_table_id = aws_route_table.rtb_public.id
 
-  depends_on = ["aws_route_table.rtb_public"]
+  depends_on = [aws_route_table.rtb_public]
 }
