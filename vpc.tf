@@ -19,7 +19,7 @@ resource "aws_subnet" "public_subnet_a" {
     Environment = "${var.environment}"
   }
 
-  depends_on = ["aws_vpc.wordpress_vpc"]
+  depends_on = [aws_vpc.wordpress_vpc]
 }
 
 resource "aws_subnet" "public_subnet_b" {
@@ -32,7 +32,7 @@ resource "aws_subnet" "public_subnet_b" {
     Name        = "public-b",
     Environment = "${var.environment}"
   }
-  depends_on = ["aws_vpc.wordpress_vpc"]
+  depends_on = [aws_vpc.wordpress_vpc]
 }
 
 ### Create 2 subnets for wordpress servers
@@ -47,7 +47,7 @@ resource "aws_subnet" "app_subnet_a" {
     Name        = "app-a",
     Environment = "${var.environment}"
   }
-  depends_on = ["aws_vpc.wordpress_vpc"]
+  depends_on = [aws_vpc.wordpress_vpc]
 }
 
 
@@ -62,5 +62,5 @@ resource "aws_subnet" "app_subnet_b" {
     Name        = "app-b",
     Environment = "${var.environment}"
   }
-  depends_on = ["aws_vpc.wordpress_vpc"]
+  depends_on = [aws_vpc.wordpress_vpc]
 }
