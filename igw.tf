@@ -7,7 +7,7 @@ resource "aws_internet_gateway" "wordpress_igateway" {
     Environment = "${var.environment}"
   }
 
-  depends_on = aws_vpc.wordpress_vpc
+  depends_on = [aws_vpc.wordpress_vpc]
 }
 
 
