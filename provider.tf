@@ -6,3 +6,7 @@ terraform {
     }
   }
 }
+
+provider "AWS" {
+  region = "ap-southeast-2"
+}
