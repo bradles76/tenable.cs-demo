@@ -3,7 +3,7 @@
 resource "aws_security_group" "sg_22" {
 
   name   = "sg_22"
-  vpc_id = "${aws_vpc.wordpress_vpc.id}"
+  vpc_id = aws_vpc.wordpress_vpc.id
 
   ingress {
     from_port   = 22
@@ -30,7 +30,7 @@ resource "aws_security_group" "sg_22" {
 
 # Create NACL for access bastion host via port 22
 resource "aws_network_acl" "wordpress_public_a" {
-  vpc_id = "${aws_vpc.wordpress_vpc.id}"
+  vpc_id = aws_vpc.wordpress_vpc.id
 
   subnet_ids = ["${aws_subnet.public_subnet_a.id}"]
 
@@ -41,7 +41,7 @@ resource "aws_network_acl" "wordpress_public_a" {
 }
 
 resource "aws_network_acl_rule" "inbound_rule_22" {
-  network_acl_id = "${aws_network_acl.wordpress_public_a.id}"
+  network_acl_id = aws_network_acl.wordpress_public_a.id
   rule_number    = 200
   egress         = false
   protocol       = "-1"
@@ -53,7 +53,7 @@ resource "aws_network_acl_rule" "inbound_rule_22" {
 }
 
 resource "aws_network_acl_rule" "outbound_rule_22" {
-  network_acl_id = "${aws_network_acl.wordpress_public_a.id}"
+  network_acl_id = aws_network_acl.wordpress_public_a.id
   rule_number    = 200
   egress         = true
   protocol       = "-1"
@@ -68,7 +68,7 @@ resource "aws_network_acl_rule" "outbound_rule_22" {
 resource "aws_instance" "wordpress_bastion" {
   ami                    = "ami-05654370f5b5eb0b0"
   instance_type          = "t2.micro"
-  subnet_id              = "${aws_subnet.public_subnet_a.id}"
+  subnet_id              = aws_subnet.public_subnet_a.id
   vpc_security_group_ids = ["${aws_security_group.sg_22.id}"]
   key_name               = "TenableAB"
 

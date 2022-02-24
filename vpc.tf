@@ -1,5 +1,5 @@
 resource "aws_vpc" "wordpress_vpc" {
-  cidr_block           = "${var.cidr_vpc}"
+  cidr_block           = var.cidr_vpc
   enable_dns_support   = true
   enable_dns_hostnames = true
   tags = {
@@ -9,10 +9,10 @@ resource "aws_vpc" "wordpress_vpc" {
 }
 
 resource "aws_subnet" "public_subnet_a" {
-  vpc_id                  = "${aws_vpc.wordpress_vpc.id}"
-  cidr_block              = "${var.cidr_public_subnet_a}"
+  vpc_id                  = aws_vpc.wordpress_vpc.id
+  cidr_block              = var.cidr_public_subnet_a
   map_public_ip_on_launch = "true"
-  availability_zone       = "${var.az_a}"
+  availability_zone       = var.az_a
 
   tags = {
     Name        = "public-a",
@@ -23,10 +23,10 @@ resource "aws_subnet" "public_subnet_a" {
 }
 
 resource "aws_subnet" "public_subnet_b" {
-  vpc_id                  = "${aws_vpc.wordpress_vpc.id}"
-  cidr_block              = "${var.cidr_public_subnet_b}"
+  vpc_id                  = aws_vpc.wordpress_vpc.id
+  cidr_block              = var.cidr_public_subnet_b
   map_public_ip_on_launch = "true"
-  availability_zone       = "${var.az_b}"
+  availability_zone       = var.az_b
 
   tags = {
     Name        = "public-b",
@@ -38,10 +38,10 @@ resource "aws_subnet" "public_subnet_b" {
 ### Create 2 subnets for wordpress servers
 resource "aws_subnet" "app_subnet_a" {
 
-  vpc_id     = "${aws_vpc.wordpress_vpc.id}"
-  cidr_block = "${var.cidr_app_subnet_a}"
+  vpc_id     = aws_vpc.wordpress_vpc.id
+  cidr_block = var.cidr_app_subnet_a
   #map_public_ip_on_launch = "true"
-  availability_zone = "${var.az_b}"
+  availability_zone = var.az_b
 
   tags = {
     Name        = "app-a",
@@ -53,10 +53,10 @@ resource "aws_subnet" "app_subnet_a" {
 
 resource "aws_subnet" "app_subnet_b" {
 
-  vpc_id     = "${aws_vpc.wordpress_vpc.id}"
-  cidr_block = "${var.cidr_app_subnet_b}"
+  vpc_id     = aws_vpc.wordpress_vpc.id
+  cidr_block = var.cidr_app_subnet_b
   #map_public_ip_on_launch = "true"
-  availability_zone = "${var.az_b}"
+  availability_zone = var.az_b
 
   tags = {
     Name        = "app-b",

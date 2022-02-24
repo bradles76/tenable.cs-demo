@@ -2,7 +2,7 @@
 resource "aws_security_group" "sg_application_lb" {
 
   name   = "sg_application_lb"
-  vpc_id = "${aws_vpc.wordpress_vpc.id}"
+  vpc_id = aws_vpc.wordpress_vpc.id
 
   ingress {
     # TLS (change to whatever ports you need)
@@ -46,13 +46,13 @@ resource "aws_lb" "lb_wordpress" {
 }
 
 resource "aws_lb_listener" "front_end" {
-  load_balancer_arn = "${aws_lb.lb_wordpress.arn}"
+  load_balancer_arn = aws_lb.lb_wordpress.arn
   port              = "80"
   protocol          = "HTTP"
 
   default_action {
     type             = "forward"
-    target_group_arn = "${aws_lb_target_group.wordpress_vms.arn}"
+    target_group_arn = aws_lb_target_group.wordpress_vms.arn
   }
 }
 
@@ -61,19 +61,19 @@ resource "aws_lb_target_group" "wordpress_vms" {
   name     = "tf-wordpress-lb-tg"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = "${aws_vpc.wordpress_vpc.id}"
+  vpc_id   = aws_vpc.wordpress_vpc.id
 }
 
 resource "aws_lb_target_group_attachment" "wordpressa_tg_attachment" {
-  target_group_arn = "${aws_lb_target_group.wordpress_vms.arn}"
-  target_id        = "${aws_instance.wordpress_a.id}"
+  target_group_arn = aws_lb_target_group.wordpress_vms.arn
+  target_id        = aws_instance.wordpress_a.id
   port             = 80
 }
 
 
 ## Attach wordpress B to target group
 resource "aws_lb_target_group_attachment" "wordpressb_tg_attachment" {
-  target_group_arn = "${aws_lb_target_group.wordpress_vms.arn}"
-  target_id        = "${aws_instance.wordpress_b.id}"
+  target_group_arn = aws_lb_target_group.wordpress_vms.arn
+  target_id        = aws_instance.wordpress_b.id
   port             = 80
 }

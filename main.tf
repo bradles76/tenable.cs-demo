@@ -2,7 +2,7 @@
 resource "aws_security_group" "sg_wordpress" {
 
   name   = "sg_wordpress"
-  vpc_id = "${aws_vpc.wordpress_vpc.id}"
+  vpc_id = aws_vpc.wordpress_vpc.id
   tags = {
     Name        = "sg-wordpress"
     Environment = "${var.environment}"
@@ -16,7 +16,7 @@ resource "aws_security_group_rule" "allow_all" {
   to_port           = 0
   from_port         = 0
   protocol          = "-1"
-  security_group_id = "${aws_security_group.sg_wordpress.id}"
+  security_group_id = aws_security_group.sg_wordpress.id
 }
 
 resource "aws_security_group_rule" "outbound_allow_all" {
@@ -26,7 +26,7 @@ resource "aws_security_group_rule" "outbound_allow_all" {
   to_port           = 0
   from_port         = 0
   protocol          = "-1"
-  security_group_id = "${aws_security_group.sg_wordpress.id}"
+  security_group_id = aws_security_group.sg_wordpress.id
 }
 
 
@@ -34,7 +34,7 @@ resource "aws_security_group_rule" "outbound_allow_all" {
 resource "aws_instance" "wordpress_a" {
   ami                    = "ami-05654370f5b5eb0b0"
   instance_type          = "t2.micro"
-  subnet_id              = "${aws_subnet.app_subnet_a.id}"
+  subnet_id              = aws_subnet.app_subnet_a.id
   vpc_security_group_ids = ["${aws_security_group.sg_wordpress.id}"]
   key_name               = "TenableAB"
 
@@ -61,7 +61,7 @@ resource "aws_instance" "wordpress_a" {
 resource "aws_instance" "wordpress_b" {
   ami                    = "ami-05654370f5b5eb0b0"
   instance_type          = "t2.micro"
-  subnet_id              = "${aws_subnet.app_subnet_b.id}"
+  subnet_id              = aws_subnet.app_subnet_b.id
   vpc_security_group_ids = ["${aws_security_group.sg_wordpress.id}"]
   key_name               = "TenableAB"
 
