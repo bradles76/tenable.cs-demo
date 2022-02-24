@@ -7,6 +7,6 @@ terraform {
   }
 }
 
-provider "AWS" {
+provider "aws" {
   region = "ap-southeast-2"
 }
