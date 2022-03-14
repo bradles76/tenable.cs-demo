@@ -12,7 +12,7 @@ resource "aws_security_group" "sg_wordpress" {
 
 resource "aws_security_group_rule" "allow_all" {
   type              = "ingress"
-  cidr_blocks       = ["10.1.0.0/24"]
+  cidr_blocks       = ["10.1.1.0/24","10.1.2.0/24"]
   to_port           = 0
   from_port         = 0
   protocol          = "-1"
