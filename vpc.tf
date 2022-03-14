@@ -41,7 +41,7 @@ resource "aws_subnet" "app_subnet_a" {
   vpc_id     = aws_vpc.wordpress_vpc.id
   cidr_block = var.cidr_app_subnet_a
   #map_public_ip_on_launch = "true"
-  availability_zone = var.az_b
+  availability_zone = var.az_a
 
   tags = {
     Name        = "app-a",
